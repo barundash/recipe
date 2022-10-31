@@ -1,0 +1,14 @@
+<!-- Here routerLink is binded to a dynamic property index. So it should be within square brackets.
+routerLinkActive directive would add the active CSS class to mark it as active. -->
+<a routerLinkActive='active' [routerLink] = "[index]"
+style="cursor: pointer;"
+class="list-group-item clearfix">
+  <div class="pull-left">
+    <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+    <p class="list-group-item-text">{{ recipe.description }}</p>
+  </div>
+  <span class="pull-right">
+    <!-- src is defined using string interpolation -->
+    <img src="{{ recipe.imagePath }}" alt="{{ recipe.name }}" class="image-responsive" style="max-height: 50px;">
+  </span>
+</a>

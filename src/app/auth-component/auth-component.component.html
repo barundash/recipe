@@ -1,0 +1,46 @@
+<ng-template appPlaceholder></ng-template>
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <!--<div class="alert alert-danger" *ngIf='error'>
+      <p>{{ error }}</p>
+    </div>-->
+    <!-- **************************************************************************************** -->
+    <!-- Always consider using *ngIf instead of dynamic components if not neccessarily needed -->
+    <!-- **************************************************************************************** -->
+    <!--<app-alert [message]="error" *ngIf='error' (close)='onHandleError()'></app-alert>-->
+
+    <!-- **************************************Loading Spinner****************************************** -->
+    <!-- Loading spinner works only if loading is true. -->
+    <div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <!-- ************************************************************************************************ -->
+
+    <!-- *************************** Form === Template Driven ********************************************-->
+    <!-- Form can only be seen if the loading is false and loading spinner is not loading -->
+    <form #formdata='ngForm' (ngSubmit)='onSubmit(formdata)' *ngIf="!isLoading">
+      <div class="form-group">
+        <label for='email'>E-Mail</label>
+        <!-- Two inbuilt validators are used, i.e required and email. name is the form control name -->
+        <input type="email" id="email" class="form-control" ngModel name="email" required email>
+      </div>
+      <div class="form-group">
+        <label for='password'>Password</label>
+        <!-- As the backend API expects the user to send 6 characters passeword, hence this is kept for 
+        validation here. -->
+        <input type="password" id="password" class="form-control" ngModel name="password" required
+        minlength="6">
+      </div>
+      <div>
+        <!-- If we are in login mode login button is shown otherwise signup mode. String interpoltion used to
+        implement this. If the form data is invalid, the button is disabled.-->
+        <button class="btn btn-primary" type="submit" [disabled]='!formdata.valid'>{{ isLoginMode ? 'Login' : 'Sign Up' }}</button> |
+        <!-- If we are in login mode switch to signup button is shown otherwise switch to signup mode. String 
+        interpoltion used to implement this. -->
+        <button class="btn btn-primary" type="button" (click)="onSwitchMode()">
+          Switch To {{ isLoginMode ? 'Sign Up' : 'Login' }}</button>
+      </div>
+    </form>
+    <!-- *********************************************************************************************** -->
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-xs-12">
+    <!-- ngForm would give access to the javascript object which consists of all the data with respect to
+    the form. -->
+    <form (ngSubmit)="onAddItem(f)" #f="ngForm">
+      <div class="row">
+        <div class="col-xs-5 form-group">
+          <label for="name">Name</label>
+          <!-- ngModel is mentioned so that this element is registered as a control on this template driven
+          form. -->
+          <input type="text" id="name" class="form-control" name="name" ngModel required>
+        </div>
+        <div class="col-sm-2">
+          <label for="amount">Amount</label>
+          <!-- pattern defines that the number should be a positive integer (1-any positive number) -->
+          <input type="number" id="amount" class="form-control" name="amount" ngModel required
+           [pattern]="'^[1-9]+[0-9]*$'">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- Here if the form is in edit mode, then it should show update button and if it is not in edit
+          mode, it should show add button. Whenever an ingredient is selected of editing, shopping edit
+          component loads with edit mode equal to true and fetches the ingredient coming in. So in that case
+          it shows update button. -->
+          <button class="btn btn-success" type="submit" [disabled]='!f.valid'>
+            {{ editmode ? "Update" : "Add" }}</button>
+          <!-- Show delete button only if the form is in edit mode. -->
+          <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf='editmode'>Delete</button>
+          <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

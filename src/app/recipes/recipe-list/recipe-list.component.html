@@ -1,0 +1,13 @@
+<div class="row" style="margin-bottom: 40px;">
+  <div class="col-xs-12">
+    <button class="btn btn-success" (click)='onNewRecipe()'>New Recipe</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <!-- index would be sent as input to the recipe item component, so that it can be used as id in the
+    routerLink. -->
+    <app-recipe-item *ngFor="let recipeEl of recipes; let ind = index"
+    [recipe]="recipeEl" [index]="ind"></app-recipe-item>
+  </div>
+</div>

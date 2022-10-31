@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-xs-12">
+    <!-- formgroup directive is passed with recipeForm data which has been initialized and created in
+       typescript. This means that this overall form is being managed by us and not angular. -->
+    <form [formGroup]="recipeForm" (ngSubmit)='onSubmit()'>
+      <div class="row" style="margin-bottom: 35px;">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]='!recipeForm.valid'>Save</button>
+          <button type="button" class="btn btn-danger" (click)='onCancel()'>Cancel</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for='name'>Name</label>
+            <!-- Formcontrolname is the reactive form directive to map the form control to the form control
+            created in typescript. -->
+            <input type="text" class="form-control" id="name" formControlName="name">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for='imagePath'>Image Url</label>
+            <!-- To see the preview of the image in the next row, a local ref of imagepath is provided. -->
+            <input type="text" class="form-control" id="imagePath" formControlName="imagePath" #imagepath>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- Here we will call the local ref in the previous row to see the image. -->
+          <img [src]='imagepath.value' class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for='description'>Description</label>
+            <textarea type="text" class="form-control" id="description" rows="6"
+            formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+      <!--<div class="row">
+        <div class="col-xs-8">
+          <label>Ingredients</label>
+        </div>
+        <div class="col-xs-4">
+          <label>Amount</label>
+        </div>
+      </div>-->
+      <div class="row">
+        <!-- form array name is the form array created in the typescript to be mapped here. -->
+        <div class="col-xs-12" formArrayName="ingredients">
+          <!-- The commented code below fails during AOT so the new getter method is built in ths TS file -->
+          <!--<div class="row" *ngFor="let formctrl of recipeForm.get('ingredients').controls;-->
+          <!-- form group name is bound to the index so that on each iteration the form group for ingredients
+          is accessed. -->
+          <div class="row" *ngFor="let formctrl of ingredientsControl;
+          let i = index" [formGroupName]='i' style="margin-top: 10px;">
+            <div class="col-xs-8">
+              <input type="text" class="form-control" formControlName='name'>
+            </div>
+            <div class="col-xs-2">
+              <input type="number" class="form-control" formControlName='amount'>
+            </div>
+            <div class="col-xs-2">
+              <button class="btn btn-danger" type="button" (click)='onDeleteIngredient(i)'>X</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-success" style="margin-top: 10px;"
+              (click)="onAddIngredient()" type="button">Add Ingredient</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
